@@ -7,14 +7,6 @@
 function printerr( s ){ print s | "cat >&2" }
 
 BEGIN {
-  if( ARGC != 2 ){
-    printerr( \
-      "USAGE: mysql2sqlite dump_mysql.sql > dump_sqlite3.sql\n" \
-      "       file name - (dash) is not supported, because - means stdin")
-    no_END = 1
-    exit 1
-  }
-
   # Find INT_MAX supported by both this AWK (usually an ISO C signed int)
   #   and SQlite.
   # On non-8bit-based architectures, the additional bits are safely ignored.
