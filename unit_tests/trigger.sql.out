@@ -1,0 +1,79 @@
+PRAGMA synchronous = OFF;
+PRAGMA journal_mode = MEMORY;
+BEGIN TRANSACTION;
+CREATE TABLE `scimag` (
+  `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT
+,  `DOI` varchar(200) NOT NULL
+,  `DOI2` varchar(100) NOT NULL DEFAULT ''
+,  `Title` varchar(2000) NOT NULL DEFAULT ''
+,  `Author` varchar(2000) NOT NULL DEFAULT ''
+,  `Year` varchar(10) NOT NULL DEFAULT ''
+,  `Month` varchar(10) NOT NULL DEFAULT ''
+,  `Day` varchar(10) NOT NULL DEFAULT ''
+,  `Volume` varchar(45) NOT NULL DEFAULT ''
+,  `Issue` varchar(95) NOT NULL DEFAULT ''
+,  `First_page` varchar(45) NOT NULL DEFAULT ''
+,  `Last_page` varchar(45) NOT NULL DEFAULT ''
+,  `Journal` varchar(500) NOT NULL DEFAULT ''
+,  `ISBN` varchar(500) NOT NULL DEFAULT ''
+,  `ISSNP` varchar(11) NOT NULL DEFAULT ''
+,  `ISSNE` varchar(10) NOT NULL DEFAULT ''
+,  `MD5` varchar(32) NOT NULL DEFAULT ''
+,  `Filesize` integer  NOT NULL
+,  `TimeAdded` timestamp NOT NULL DEFAULT current_timestamp 
+,  `JOURNALID` varchar(45) NOT NULL DEFAULT ''
+,  `AbstractURL` varchar(500) NOT NULL DEFAULT ''
+,  `Attribute1` varchar(500) NOT NULL DEFAULT ''
+,  `Attribute2` varchar(1000) NOT NULL DEFAULT ''
+,  `Attribute3` varchar(2000) NOT NULL DEFAULT ''
+,  `Attribute4` varchar(10000) NOT NULL DEFAULT ''
+,  `Attribute5` varchar(256) NOT NULL DEFAULT ''
+,  `Attribute6` varchar(45) NOT NULL DEFAULT ''
+,  `visible` char(3) NOT NULL DEFAULT ''
+,  `PubmedID` varchar(10) NOT NULL DEFAULT ''
+,  `PMC` varchar(12) NOT NULL DEFAULT ''
+,  `PII` varchar(45) NOT NULL DEFAULT ''
+,  UNIQUE (`DOI`)
+);
+CREATE TABLE `scimag_edited` (
+  `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT
+,  `DOI` varchar(200) DEFAULT NULL
+,  `Title` varchar(2000) NOT NULL DEFAULT ''
+,  `Author` varchar(2000) NOT NULL DEFAULT ''
+,  `Year` varchar(10) NOT NULL DEFAULT ''
+,  `Month` varchar(10) NOT NULL DEFAULT ''
+,  `Day` varchar(10) NOT NULL DEFAULT ''
+,  `Volume` varchar(45) NOT NULL DEFAULT ''
+,  `Issue` varchar(95) NOT NULL DEFAULT ''
+,  `First_page` varchar(45) NOT NULL DEFAULT ''
+,  `Last_page` varchar(45) NOT NULL DEFAULT ''
+,  `Journal` varchar(500) NOT NULL DEFAULT ''
+,  `ISBN` varchar(500) NOT NULL DEFAULT ''
+,  `ISSNP` varchar(11) NOT NULL DEFAULT ''
+,  `ISSNE` varchar(10) NOT NULL DEFAULT ''
+,  `MD5` varchar(32) NOT NULL DEFAULT ''
+,  `Filesize` integer  NOT NULL DEFAULT '0'
+,  `TimeAdded` timestamp NOT NULL DEFAULT current_timestamp 
+,  `JOURNALID` varchar(45) NOT NULL DEFAULT ''
+,  `AbstractURL` varchar(500) NOT NULL DEFAULT ''
+,  `Attribute1` varchar(500) NOT NULL DEFAULT ''
+,  `Attribute2` varchar(1000) NOT NULL DEFAULT ''
+,  `Attribute3` varchar(2000) NOT NULL DEFAULT ''
+,  `Attribute4` varchar(2000) NOT NULL DEFAULT ''
+,  `Attribute5` varchar(256) NOT NULL DEFAULT ''
+,  `Attribute6` varchar(45) NOT NULL DEFAULT ''
+,  `Attribute7` varchar(500) NOT NULL DEFAULT ''
+,  `PII` varchar(45) NOT NULL DEFAULT ''
+CREATE INDEX "idx_scimag_VOLUMEINDEX" ON "scimag" (`Volume`);
+CREATE INDEX "idx_scimag_ISSUEINDEX" ON "scimag" (`Issue`);
+CREATE INDEX "idx_scimag_ISSNPINDEX" ON "scimag" (`ISSNP`);
+CREATE INDEX "idx_scimag_YEARINDEX" ON "scimag" (`Year`);
+CREATE INDEX "idx_scimag_ISSNEINDEX" ON "scimag" (`ISSNE`);
+CREATE INDEX "idx_scimag_DOIINDEX" ON "scimag" (`DOI`);
+CREATE INDEX "idx_scimag_JOURNALID" ON "scimag" (`JOURNALID`);
+CREATE INDEX "idx_scimag_DOIINDEX2" ON "scimag" (`DOI2`);
+CREATE INDEX "idx_scimag_PUBMEDINDEX" ON "scimag" (`PubmedID`);
+CREATE INDEX "idx_scimag_MD5" ON "scimag" (`MD5`);
+CREATE INDEX "idx_scimag_VISIBLEID" ON "scimag" (`visible`,`ID`);
+CREATE INDEX "idx_scimag_FULLTEXT" ON "scimag" (`Title`,`Author`);
+END TRANSACTION;
