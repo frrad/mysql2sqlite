@@ -14,7 +14,9 @@ type "$S" >/dev/null 2>&1 || {
 }
 
 
-for f in *.sql
+for f in *.in.sql
 do
- $M2S $f > $f.out
+ pfx=$(echo $f | cut -d . -f 1)
+ echo $pfx
+ $M2S $f > $pfx.out.sql
 done
