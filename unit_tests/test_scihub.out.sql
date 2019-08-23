@@ -33,7 +33,6 @@ CREATE TABLE `scimag` (
 ,  `PubmedID` varchar(10) NOT NULL DEFAULT ''
 ,  `PMC` varchar(12) NOT NULL DEFAULT ''
 ,  `PII` varchar(45) NOT NULL DEFAULT ''
-,  UNIQUE (`DOI`)
 );
 CREATE TABLE `scimag_edited` (
   `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT
@@ -66,13 +65,11 @@ CREATE TABLE `scimag_edited` (
 ,  `PII` varchar(45) NOT NULL DEFAULT ''
 ,  `PMCID` varchar(15) NOT NULL DEFAULT ''
 ,  `PubmedID` varchar(10) NOT NULL DEFAULT ''
-,  UNIQUE (`DOI`)
 );
 CREATE TABLE `publishers` (
   `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT
 ,  `DOICode` varchar(30) NOT NULL DEFAULT ''
 ,  `Publisher` varchar(300) NOT NULL DEFAULT ''
-,  UNIQUE (`DOICode`)
 );
 CREATE TABLE `magazines` (
   `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT

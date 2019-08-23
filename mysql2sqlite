@@ -173,12 +173,11 @@ aInc == 1 && /PRIMARY KEY|primary key/ { next }
 / (COLLATE|collate) [a-z0-9_]*/ { gsub( /(COLLATE|collate) [a-z0-9_]*/, "COLLATE BINARY" ) }
 
 # Print all fields definition lines except the `KEY` lines.
-/^  / && !/^(  (KEY|key)|\);)/ {
+/^  / && !/^(  (KEY|key)|\);)/ && !/UNIQUE KEY/{
   if( match( $0, /[^"`]AUTO_INCREMENT|auto_increment[^"`]/) ){
     aInc = 1
     gsub( /AUTO_INCREMENT|auto_increment/, "PRIMARY KEY AUTOINCREMENT" )
   }
-  gsub( /(UNIQUE KEY|unique key) (`.*`|".*") /, "UNIQUE " )
   gsub( /(CHARACTER SET|character set) [^ ]+[ ,]/, "" )
   # FIXME
   #   CREATE TRIGGER [UpdateLastTime]

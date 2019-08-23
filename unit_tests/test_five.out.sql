@@ -7,7 +7,6 @@ CREATE TABLE `AAAA` (
 ,  `rrrr` timestamp NULL DEFAULT current_timestamp
 ,  `ssss` timestamp NULL DEFAULT NULL 
 ,  `tttt` varchar(1) DEFAULT 'A'
-,  UNIQUE (`id`)
 ,  CONSTRAINT `bbbb_fk` FOREIGN KEY (`bbbb`) REFERENCES `category` (`id`)
 );
 CREATE INDEX "idx_AAAA_bbbb_fk" ON "AAAA" (`bbbb`);
