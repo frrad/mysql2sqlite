@@ -18,5 +18,5 @@ for f in *.in.sql
 do
  pfx=$(echo $f | cut -d . -f 1)
  echo $pfx
- $M2S $f > $pfx.out.sql
+ $M2S < $f > $pfx.out.sql
 done
