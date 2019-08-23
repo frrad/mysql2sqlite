@@ -35,107 +35,6 @@ CREATE TABLE `scimag` (
 ,  `PII` varchar(45) NOT NULL DEFAULT ''
 ,  UNIQUE (`DOI`)
 );
-CREATE TRIGGER `md5_all_upd` BEFORE UPDATE ON `scimag` FOR EACH ROW BEGIN
-
-
-IF
-NEW.`DOI`!=OLD.`DOI` OR 
-NEW.`DOI2`!=OLD.`DOI2` OR 
-NEW.`Title`!=OLD.`Title` OR 
-NEW.`Author`!=OLD.`Author` OR 
-NEW.`Year`!=OLD.`Year` OR 
-NEW.`Month`!=OLD.`Month` OR 
-NEW.`Day`!=OLD.`Day` OR 
-NEW.`Volume`!=OLD.`Volume` OR 
-NEW.`Issue`!=OLD.`Issue` OR 
-NEW.`First_page`!=OLD.`First_page` OR 
-NEW.`Last_page`!=OLD.`Last_page` OR 
-NEW.`Journal`!=OLD.`Journal` OR 
-NEW.`ISBN`!=OLD.`ISBN` OR 
-NEW.`ISSNP`!=OLD.`ISSNP` OR 
-NEW.`ISSNE`!=OLD.`ISSNE` OR 
-NEW.`Filesize`!=OLD.`Filesize` OR 
-NEW.`JOURNALID`!=OLD.`JOURNALID` OR 
-NEW.`AbstractURL`!=OLD.`AbstractURL` OR 
-NEW.`Attribute1`!=OLD.`Attribute1` OR 
-NEW.`Attribute2`!=OLD.`Attribute2` OR 
-NEW.`Attribute3`!=OLD.`Attribute3` OR 
-NEW.`Attribute4`!=OLD.`Attribute4` OR 
-NEW.`Attribute5`!=OLD.`Attribute5` OR 
-NEW.`Attribute6`!=OLD.`Attribute6` OR 
-NEW.`visible`!=OLD.`visible` OR 
-NEW.`PubmedID`!=OLD.`PubmedID` OR 
-NEW.`PMC`!=OLD.`PMC` OR 
-NEW.`PII`!=OLD.`PII` THEN
-`libgen_scimag`.`scimag_edited`
-(
-`DOI`,
-`DOI2`,
-`Title`,
-`Author`,
-`Year`,
-`Month`,
-`Day`,
-`Volume`,
-`Issue`,
-`First_page`,
-`Last_page`,
-`Journal`,
-`ISBN`,
-`ISSNP`,
-`ISSNE`,
-`MD5`,
-`Filesize`,
-`TimeAdded`,
-`JOURNALID`,
-`AbstractURL`,
-`Attribute1`,
-`Attribute2`,
-`Attribute3`,
-`Attribute4`,
-`Attribute5`,
-`Attribute6`,
-`visible`,
-`PubmedID`,
-`PMC`,
-`PII`
-)
-VALUES
-(
-OLD.`DOI`,
-OLD.`DOI2`,
-OLD.`Title`,
-OLD.`Author`,
-OLD.`Year`,
-OLD.`Month`,
-OLD.`Day`,
-OLD.`Volume`,
-OLD.`Issue`,
-OLD.`First_page`,
-OLD.`Last_page`,
-OLD.`Journal`,
-OLD.`ISBN`,
-OLD.`ISSNP`,
-OLD.`ISSNE`,
-OLD.`MD5`,
-OLD.`Filesize`,
-NOW(),
-OLD.`JOURNALID`,
-OLD.`AbstractURL`,
-OLD.`Attribute1`,
-OLD.`Attribute2`,
-OLD.`Attribute3`,
-OLD.`Attribute4`,
-OLD.`Attribute5`,
-OLD.`Attribute6`,
-OLD.`visible`,
-OLD.`PubmedID`,
-OLD.`PMC`,
-OLD.`PII`
-);
-END IF;
-
-END ;;
 CREATE TABLE `scimag_edited` (
   `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT
 ,  `DOI` varchar(200) DEFAULT NULL
@@ -169,24 +68,6 @@ CREATE TABLE `scimag_edited` (
 ,  `PubmedID` varchar(10) NOT NULL DEFAULT ''
 ,  UNIQUE (`DOI`)
 );
-CREATE TRIGGER `scimag_edited_before_ins_tr` BEFORE INSERT ON `scimag_edited`
-  FOR EACH ROW
-BEGIN
-  IF (SELECT count(*) FROM `libgen_scimag`.`scimag` WHERE `md5` = NEW.`md5`) =0 THEN
-    	set @msg1 = concat("MD5 not in filetable ", NEW.`md5`);
-  		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @msg1;
-  END IF;
-END ;;
-CREATE TRIGGER `scimag_edited_before_upd_tr` BEFORE UPDATE ON `scimag_edited`
-  FOR EACH ROW
-BEGIN
-IF OLD.`md5` !=NEW.`md5` THEN 
-  IF (SELECT count(*) FROM `libgen_scimag`.`scimag` WHERE `md5` = NEW.`md5`) =0 THEN
-    	set @msg1 = concat("MD5 not in filetable ", NEW.`md5`);
-  		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @msg1;
-  END IF;
-END IF;
-END ;;
 CREATE TABLE `publishers` (
   `ID` integer  NOT NULL PRIMARY KEY AUTOINCREMENT
 ,  `DOICode` varchar(30) NOT NULL DEFAULT ''

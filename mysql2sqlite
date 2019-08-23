@@ -81,14 +81,13 @@ function bit_to_int( str_bit,   powtwo, i, res, bit, overflow ){
 # CREATE TRIGGER statements have funny commenting. Remember we are in trigger.
 /^\/\*.*(CREATE.*TRIGGER|create.*trigger)/ {
   gsub( /^.*(TRIGGER|trigger)/, "CREATE TRIGGER" )
-  print
   inTrigger = 1
   next
 }
 # The end of CREATE TRIGGER has a stray comment terminator
-/(END|end) \*\/;;/ { gsub( /\*\//, "" ); print; inTrigger = 0; next }
+/(END|end) \*\/;;/ { gsub( /\*\//, "" ); inTrigger = 0; next }
 # The rest of triggers just get passed through
-inTrigger != 0 { print; next }
+inTrigger != 0 {  next }
 
 # CREATE VIEW looks like a TABLE in comments
 /^\/\*.*(CREATE.*TABLE|create.*table)/ {
